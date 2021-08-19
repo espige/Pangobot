@@ -103,5 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-# Discord Token
-token.txt
+# Config file
+config.json
