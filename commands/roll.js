@@ -35,7 +35,7 @@ const execute = async (interaction) => {
             }
             const results = new MessageEmbed()
                 .setTitle(`Rolled ${numDice}d${numSides}`)
-                .addField('Rolls', rolls.substring(0, rolls.length - 2));
+                .addField('Results', rolls.substring(0, rolls.length - 2));
             if (numDice > 1) results.addField('Total', `${total}`);
             await interaction.reply({ embeds: [results] });
         }
