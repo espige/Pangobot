@@ -105,6 +105,3 @@ dist
 
 # Config file
 config.json
-
-# Script for registering slash commands
-registerSlashCommands.js
