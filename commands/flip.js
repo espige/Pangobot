@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const {randBetween} = require('../helperFunctions');
+const { randBetween } = require('../helperFunctions');
 
 const data = new SlashCommandBuilder()
-    .setName('coinflip')
+    .setName('flip')
     .setDescription('Flips a coin');
 
 const execute = async (interaction) => {

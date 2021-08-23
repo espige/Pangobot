@@ -2,8 +2,8 @@
 A discord bot for The Social Pangolin server
 
 ## Slash Commands
-### **/coinflip**
-Pangobot responds with either 'Heads' or 'Tails'
+### **/flip**
+Pangobot flips a coin and provides the result
 
 ### **/roll**
 Pangobot responds with the results of each roll and the combined total of all rolls.
