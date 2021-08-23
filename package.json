@@ -6,10 +6,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "deployCommands": "node deployCommands.js"
+    "deployCommands": "node deployCommands.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.5.0",
     "@discordjs/rest": "^0.1.0-canary.0",
