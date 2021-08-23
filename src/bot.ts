@@ -1,6 +1,8 @@
-const { Client, Intents, Message, Collection } = require('discord.js');
-const fs = require('fs');
-const { token } = require('./config.json');
+import { Client, Collection, Intents, Interaction } from "discord.js";
+import { Command } from "./common/interfaces";
+import fs from 'fs';
+
+const { token } = require('../config.json');
 
 const intents = [
     Intents.FLAGS.GUILDS,
@@ -11,13 +13,13 @@ const intents = [
 // create a discord client
 const client = new Client({ intents });
 
-client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commands = new Collection();
+const commandFiles = fs.readdirSync(`${__dirname}/commands`).filter((file: string) => file.endsWith('.ts'));
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const command = require(`${__dirname}/commands/${file}`) as Command;
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    client.commands.set(command.data.name, command);
+    commands.set(command.data?.name, command);
 }
 
 // when the client is ready, run this code
@@ -26,10 +28,10 @@ client.once('ready', () => {
     console.log('Ready!');
 })
 
-client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', async (interaction: Interaction) => {
 	if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+	const command = commands.get(interaction.commandName) as Command;
 
 	if (!command) return;
 

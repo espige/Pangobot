@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { MessageEmbed } = require('discord.js');
-const {randBetween} = require('../helperFunctions');
+const {randBetween} = require('../common/helperFunctions');
 
 const data = new SlashCommandBuilder()
     .setName('roll')
