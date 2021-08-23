@@ -11,3 +11,6 @@ Enter the amount of dice and number of sides after the command with the format /
 The number of dice can be omitted to roll only one die.
 
 example inputs: '/roll 4d6' '/roll d20'
+
+### **/pangofact**
+Pangobot responds with a random fact about pangolins
