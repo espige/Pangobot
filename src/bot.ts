@@ -13,13 +13,13 @@ const intents = [
 // create a discord client
 const client = new Client({ intents });
 
-const commands = new Collection();
+const commands = new Collection<string, Command>();
 const commandFiles = fs.readdirSync(`${__dirname}/commands`).filter((file: string) => file.endsWith('.ts'));
 for (const file of commandFiles) {
-    const command = require(`${__dirname}/commands/${file}`) as Command;
+    const { command }: { command: Command } = require(`${__dirname}/commands/${file}`);
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    commands.set(command.data?.name, command);
+    commands.set(command.data.name, command);
 }
 
 // when the client is ready, run this code
