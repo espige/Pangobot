@@ -1,25 +1,26 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
-const {randBetween} = require('../common/helperFunctions');
+import { SlashCommandBuilder, SlashCommandStringOption } from "@discordjs/builders";
+import { CommandInteraction, MessageEmbed } from "discord.js";
+import { randBetween } from "../common/helperFunctions";
+import { Command } from "../common/interfaces";
 
 const data = new SlashCommandBuilder()
     .setName('roll')
     .setDescription('Roll dice')
-    .addStringOption(option =>
+    .addStringOption((option: SlashCommandStringOption) =>
         option.setName('dice')
             .setDescription('List what dice you want rolled ex. d20 or 4d6')
             .setRequired(true)
     );
 
-const execute = async (interaction) => {
-    const diceString = interaction.options.getString('dice');
+const execute = async (interaction: CommandInteraction): Promise<void> => {
+    const diceString = interaction.options.getString('dice') as string;
     const regex = new RegExp('^(\\d)*(d|D){1}(\\d)+$');
     const isMatch = regex.test(diceString);
 
     if (isMatch) {
-        let [numDice, numSides] = diceString.split('d');
-        numDice = numDice === '' ? 1 : parseInt(numDice);
-        numSides = parseInt(numSides);
+        const [numDiceString, numSidesString] = diceString.split('d');
+        const numDice = numDiceString === '' ? 1 : parseInt(numDiceString);
+        const numSides = parseInt(numSidesString);
         if (numDice < 1 || numSides < 2) {
             await interaction.reply({
                 content: 'Beep boop. Please enter a valid number of dice or sides', 
@@ -47,7 +48,4 @@ const execute = async (interaction) => {
     }
 }
 
-module.exports = {
-    data,
-    execute,
-};
+export const command: Command = { data, execute };
