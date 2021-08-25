@@ -11,7 +11,7 @@ const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-const execute = async (interaction) => {
+const execute = async ({ interaction }) => {
     const diceString = interaction.options.getString('dice');
     const regex = new RegExp('^(\\d)*(d|D){1}(\\d)+$');
     const isMatch = regex.test(diceString);
