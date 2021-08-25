@@ -42,26 +42,20 @@ client.on('interactionCreate', async interaction => {
 });
 
 // TODO: use message code later for profanity filter
+client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
 
-// const prefix = '!';
-// client.on('messageCreate', async (msg) => {
-//     // console.log(msg.content);
-//     if (!msg.content.startsWith(prefix) || msg.author.bot) return;
-
-//     const args = msg.content.slice(prefix.length).split(/ +/);
-//     const command = args.shift().toLowerCase();
-
-//     if (command === 'ping') {
-//         // await msg.channel.send('Pong!');
-//         await msg.reply('Pong!');
-//     } else if (command === 'beep') {
-//         // await msg.channel.send('Boop!');
-//         await msg.reply('Boop!');
-//     } else if (command === 'server') {
-//         // await msg.channel.send(`This server's name is ${msg.guild.name}`);
-//         await msg.reply(`This server's name is ${msg.guild.name} and id is ${msg.guild.id}`);
-//     }
-// });
+    const content = message.content.toLowerCase();
+    // have profanity filter first
+    if (content.includes('good bot') || content.includes('bad bot')) {
+        // check to see if the bot sent the message before the one that just got sent in
+        const previousMessages = await message.channel.messages.fetch({ limit: 2 });
+        if (previousMessages.last()?.author.bot) {
+            if (content.includes('good')) message.channel.send(':D');
+            else message.channel.send('D:');;
+        }
+    }
+});
 
 // login to discord with your app's token
 client.login(token)
