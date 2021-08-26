@@ -58,8 +58,8 @@ client.on('messageCreate', async (message) => {
     }
 });
 
+// instantiate DiscordTogether
 client.discordTogether = new DiscordTogether(client);
 
 // login to discord with your app's token
 client.login(token)
-module.exports = client;

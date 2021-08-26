@@ -14,3 +14,6 @@ example inputs: '/roll 4d6' '/roll d20'
 
 ### **/pangofact**
 Pangobot responds with a random fact about pangolins
+
+### **/watch**
+Pangobot starts a youtube watch activity in the voice channel the user specifies.
