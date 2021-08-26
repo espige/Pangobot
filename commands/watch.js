@@ -40,7 +40,7 @@ const execute = async ({ client, interaction }) => {
 			);
 
         await interaction.reply({
-            content: 'Beep boop. Please select a voice channel.',
+            content: 'Beep boop. Please choose a voice channel to use.',
             components: [row],
             ephemeral: true
         });

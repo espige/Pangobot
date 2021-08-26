@@ -51,7 +51,7 @@ client.on('interactionCreate', async interaction => {
     if (interaction.customId === 'selectVoiceChannel') {
         const invite = await client.discordTogether.createTogetherCode(channel.id, 'youtube');
         // await interaction.update();
-        interaction.update({ content: `You selected ${channel.name}`, components: [] });
+        // interaction.update({ content: `You selected ${channel.name}` });
         interaction.reply(`Beep boop. Started a youtube watch activity in ${channel.name}\n${invite.code}`);
         // interaction.update({ content: `${invite.code}`, components: [], ephemeral: false });
     }

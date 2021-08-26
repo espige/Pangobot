@@ -7,7 +7,7 @@ const data = new SlashCommandBuilder()
     .setDescription('watch2')
     .addChannelOption(option =>
         option.setName('channel')
-        .setDescription('Which voice channel this will be run in')
+        .setDescription('Which voice channel to use')
         .setRequired(true)
     );
     // .addStringOption(option =>
@@ -20,7 +20,7 @@ const execute = async ({ interaction }) => {
     const channel = interaction.options.getChannel('channel');
     if (channel.type !== 'GUILD_VOICE') {
         await interaction.reply({
-            content: 'Beep boop. You must select a voice channel for this.',
+            content: 'Beep boop. You must choose a voice channel.',
             ephemeral: true,
         });
     } else {
