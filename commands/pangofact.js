@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, italic } = require('@discordjs/builders');
-const { randBetween } = require('../helperFunctions');
+const { randBetween } = require('../common/helperFunctions');
 
 const pangoFacts = [
     `The scientific name for pangolin is ${italic('manidae')}.`,

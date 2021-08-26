@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { randBetween } = require('../helperFunctions');
+const { randBetween } = require('../common/helperFunctions');
 
 const data = new SlashCommandBuilder()
     .setName('flip')
