@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 const { randBetween } = require('../common/helperFunctions');
 
 const data = new SlashCommandBuilder()
@@ -7,7 +8,10 @@ const data = new SlashCommandBuilder()
 
 const execute = async (interaction) => {
     const res = randBetween(0, 1) === 1 ? 'Heads' : 'Tails';
-    await interaction.reply(res);
+    const embed = new MessageEmbed()
+        .setTitle('Flipped a coin')
+        .setDescription(res);
+    await interaction.reply({ embeds: [embed] });
 }
 
 module.exports = {
