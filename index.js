@@ -1,3 +1,4 @@
+const { DiscordTogether } = require('discord-together');
 const { Client, Intents, Message, Collection } = require('discord.js');
 const fs = require('fs');
 const { token } = require('./config.json');
@@ -56,6 +57,9 @@ client.on('messageCreate', async (message) => {
         }
     }
 });
+
+// instantiate DiscordTogether
+client.discordTogether = new DiscordTogether(client);
 
 // login to discord with your app's token
 client.login(token)
