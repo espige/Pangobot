@@ -35,27 +35,12 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute({ client, interaction });
+		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
-
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isSelectMenu()) return;
-    console.log('I finally figured this out!!!');
-    // console.log(interaction);
-    const channel = JSON.parse(interaction.values[0]);
-    console.log(channel);
-    if (interaction.customId === 'selectVoiceChannel') {
-        const invite = await client.discordTogether.createTogetherCode(channel.id, 'youtube');
-        // await interaction.update();
-        // interaction.update({ content: `You selected ${channel.name}` });
-        interaction.reply(`Beep boop. Started a youtube watch activity in ${channel.name}\n${invite.code}`);
-        // interaction.update({ content: `${invite.code}`, components: [], ephemeral: false });
-    }
-})
 
 // TODO: use message code later for profanity filter
 client.on('messageCreate', async (message) => {

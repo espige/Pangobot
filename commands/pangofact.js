@@ -24,7 +24,7 @@ const data = new SlashCommandBuilder()
     .setName('pangofact')
     .setDescription('Get a fandom fact about pangolins!');
 
-const execute = async ({ interaction }) => {
+const execute = async (interaction) => {
     const idx = randBetween(0, pangoFacts.length - 1);
     await interaction.reply(`Beep boop. ${pangoFacts[idx]}`);
 }

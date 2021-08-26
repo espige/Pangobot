@@ -1,49 +1,30 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { DiscordTogether } = require('discord-together');
-const { MessageActionRow, MessageSelectMenu } = require('discord.js');
-// const { client } = require('../index');
+const { MessageEmbed } = require('discord.js');
+const {randBetween} = require('../helperFunctions');
 
 const data = new SlashCommandBuilder()
     .setName('watch')
-    .setDescription('Watch a youtube video together in a voice channel');
+    .setDescription('watch')
+    .addChannelOption(option =>
+        option.setName('voice-channel')
+        .setDescription('Which voice channel to use')
+        .setRequired(true)
+    );
 
-const execute = async ({ client, interaction }) => {
-    // console.log(client.discordTogether);
-    // console.log(interaction.member.voice.channel);
-    // console.log(interaction.guild);
-    const channels = await interaction.guild.channels.fetch();
-    // channels.forEach(element => {
-    //     console.log(element.type);
-    // });
-    // console.log('🔥');
-    const voiceChannels = channels.filter((channel) => channel.type === 'GUILD_VOICE');
-    // console.log(`there are ${voiceChannels.size} voice channels`);
-    // console.log(voiceChannels);
-    const options = [];
-    voiceChannels.forEach(channel => {
-        const { name, id } = channel;
-        options.push({
-            label: name,
-            value: JSON.stringify({ name, id }),
-        })
-    });
-    // console.log(channels);
-    // const invite = await client.discordTogether.createTogetherCode(interaction.member.voice.channel.id, 'youtube');
-    // interaction.channel.send(`${invite.code}`);
-
-    const row = new MessageActionRow()
-			.addComponents(
-				new MessageSelectMenu()
-					.setCustomId('selectVoiceChannel')
-					.setPlaceholder('Choose a voice channel')
-					.addOptions(options),
-			);
-
+const execute = async (interaction) => {
+    const channel = interaction.options.getChannel('channel');
+    if (channel.type !== 'GUILD_VOICE') {
         await interaction.reply({
-            content: 'Beep boop. Please choose a voice channel to use.',
-            components: [row],
-            ephemeral: true
+            content: 'Beep boop. You must choose a voice channel.',
+            ephemeral: true,
         });
+    } else {
+        console.log(channel);
+        // await interaction.reply('channel');
+
+        const invite = await interaction.client.discordTogether.createTogetherCode(channel.id, 'youtube');
+        interaction.reply(`Beep boop. Started a youtube watch activity in ${channel.name}\n${invite.code}`);
+    }
 }
 
 module.exports = {
