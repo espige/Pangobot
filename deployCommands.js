@@ -32,7 +32,6 @@ if (yargs.argv.env === 'DEV') {
 const rest = new REST({ version: '9' }).setToken(token);
 
 (async () => {
-	console.log(yargs.argv);
 	try {
 		console.log('Started refreshing application (/) commands.');
 
