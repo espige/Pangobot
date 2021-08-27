@@ -3,7 +3,7 @@ const { Client, Intents, Message, Collection } = require('discord.js');
 const fs = require('fs');
 const Filter = require('bad-words');
 const { token } = require('./config.json');
-const badWords = require('./common/badWords');
+const bannedWords = require('./common/bannedWords');
 const { userMention } = require('@discordjs/builders');
 const dayjs = require('dayjs');
 
@@ -29,7 +29,7 @@ for (const file of commandFiles) {
 
 // create a profanity filter
 const filter = new Filter({ emptyList: true });
-filter.addWords(...badWords);
+filter.addWords(...bannedWords);
 
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
@@ -67,7 +67,7 @@ ${content}
 ---------------------------`;
         console.log(logString);
         logFile.write(logString + '\r\n');
-        message.channel.send(`${userMention(message.author.id)} Your post has been deleted because contained one or more words that are banned on this server.`);
+        message.channel.send(`${userMention(message.author.id)} Your post has been deleted because it contained one or more words that are banned on this server.`);
         await message.delete();
     }
     // respond to someone saying good bot or bad bot immediately after the bot posts
