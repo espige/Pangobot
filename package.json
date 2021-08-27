@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "deploy": "node deployCommands.js",
+    "deploy:dev": "node deployCommands.js --env=DEV",
+    "deploy:prod": "node deployCommands.js --env=PROD",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "nodemon": "^2.0.12",
-    "prettier": "^2.3.2"
+    "prettier": "^2.3.2",
+    "yargs": "^17.1.1"
   }
 }
