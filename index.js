@@ -2,10 +2,11 @@ const { DiscordTogether } = require('discord-together');
 const { Client, Intents, Message, Collection } = require('discord.js');
 const fs = require('fs');
 const Filter = require('bad-words');
-const { token } = require('./config.json');
+const { tokenDev, tokenProd } = require('./config.json');
 const bannedWords = require('./common/bannedWords');
 const { userMention } = require('@discordjs/builders');
 const dayjs = require('dayjs');
+const yargs = require('yargs');
 
 const logFile = fs.createWriteStream('./logs.txt', { flags: 'a+' });
 
@@ -83,6 +84,15 @@ ${content}
 
 // instantiate DiscordTogether
 client.discordTogether = new DiscordTogether(client);
+
+let token;
+if (yargs.argv.env === 'DEV') {
+    token = tokenDev;
+} else if (yargs.argv.env === 'PROD') {
+    token = tokenProd;
+} else {
+    throw new Error('Argument must be a valid environment');
+}
 
 // login to discord with your app's token
 client.login(token)
