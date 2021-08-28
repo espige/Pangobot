@@ -75,7 +75,7 @@ ${content}
     if (content.includes('good bot') || content.includes('bad bot')) {
         // check to see if the bot sent the message before the one that just got sent in
         const previousMessages = await message.channel.messages.fetch({ limit: 2 });
-        if (previousMessages.last()?.author.bot) {
+        if (previousMessages.last().author.bot) {
             if (content.includes('good')) message.channel.send(':D');
             else message.channel.send('D:');;
         }
