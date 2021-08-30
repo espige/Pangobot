@@ -1,12 +1,12 @@
-const { DiscordTogether } = require('discord-together');
-const { Client, Intents, Message, Collection } = require('discord.js');
-const fs = require('fs');
-const Filter = require('bad-words');
-const { tokenDev, tokenProd } = require('./config.json');
-const bannedWords = require('./common/bannedWords');
-const { userMention } = require('@discordjs/builders');
-const dayjs = require('dayjs');
-const yargs = require('yargs');
+import { Client, Intents, Message, Collection, Interaction } from "discord.js";
+import fs from 'fs';
+import Filter from 'bad-words';
+const { tokenDev, tokenProd } = require('../config.json');
+import { bannedWords } from "./common/bannedWords";
+import { userMention } from "@discordjs/builders";
+import dayjs from 'dayjs';
+import * as yargs from 'yargs';
+import { Command } from "./common/interfaces";
 
 const logFile = fs.createWriteStream('./logs.txt', { flags: 'a+' });
 
@@ -19,13 +19,13 @@ const intents = [
 // create a discord client
 const client = new Client({ intents });
 
-client.commands = new Collection();
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commands = new Collection<string, Command>();
+const commandFiles = fs.readdirSync(`${__dirname}/commands`).filter((file: string) => file.endsWith('.ts') || file.endsWith('.js'));
 for (const file of commandFiles) {
-    const command = require(`./commands/${file}`);
+    const { command }: { command: Command } = require(`${__dirname}/commands/${file}`);
     // set a new item in the Collection
     // with the key as the command name and the value as the exported module
-    client.commands.set(command.data.name, command);
+    commands.set(command.data.name, command);
 }
 
 // create a profanity filter
@@ -41,7 +41,7 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-	const command = client.commands.get(interaction.commandName);
+	const command = <Command>(commands.get(interaction.commandName));
 
 	if (!command) return;
 
@@ -54,7 +54,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 // TODO: use message code later for profanity filter
-client.on('messageCreate', async (message) => {
+client.on('messageCreate', async message => {
     if (message.author.bot) return;
 
     const content = message.content.toLowerCase();
@@ -75,20 +75,18 @@ ${content}
     if (content.includes('good bot') || content.includes('bad bot')) {
         // check to see if the bot sent the message before the one that just got sent in
         const previousMessages = await message.channel.messages.fetch({ limit: 2 });
-        if (previousMessages.last().author.bot) {
+        if (previousMessages.last()?.author.bot) {
             if (content.includes('good')) message.channel.send(':D');
             else message.channel.send('D:');;
         }
     }
 });
 
-// instantiate DiscordTogether
-client.discordTogether = new DiscordTogether(client);
-
 let token;
-if (yargs.argv.env === 'DEV') {
+const argv = yargs.option({ env: { type: 'string' } }).parseSync();
+if (argv.env === 'DEV') {
     token = tokenDev;
-} else if (yargs.argv.env === 'PROD') {
+} else if (argv.env === 'PROD') {
     token = tokenProd;
 } else {
     throw new Error('Argument must be a valid environment');

@@ -1,4 +1,4 @@
-const bannedWords = [
+export const bannedWords = [
     'coon',
     'coons',
     'che-che',
@@ -34,5 +34,3 @@ const bannedWords = [
     'zipper head',
     'zipper heads',
 ];
-
-module.exports = bannedWords;

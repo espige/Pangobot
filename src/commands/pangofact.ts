@@ -1,5 +1,7 @@
-const { SlashCommandBuilder, italic } = require('@discordjs/builders');
-const { randBetween } = require('../common/helperFunctions');
+import { SlashCommandBuilder, italic } from '@discordjs/builders';
+import { CommandInteraction } from 'discord.js';
+import { randBetween } from "../common/helperFunctions";
+import { Command } from '../common/interfaces';
 
 const pangoFacts = [
     `The scientific name for pangolin is ${italic('manidae')}.`,
@@ -24,12 +26,9 @@ const data = new SlashCommandBuilder()
     .setName('pangofact')
     .setDescription('Get a fandom fact about pangolins!');
 
-const execute = async (interaction) => {
+const execute = async (interaction: CommandInteraction): Promise<void> => {
     const idx = randBetween(0, pangoFacts.length - 1);
     await interaction.reply(`Beep boop. ${pangoFacts[idx]}`);
 }
 
-module.exports = {
-    data,
-    execute,
-};
+export const command: Command = { data, execute };
