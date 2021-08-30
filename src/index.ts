@@ -1,4 +1,3 @@
-import { DiscordTogether } from "discord-together";
 import { Client, Intents, Message, Collection, Interaction } from "discord.js";
 import fs from 'fs';
 import Filter from 'bad-words';
@@ -95,7 +94,3 @@ if (argv.env === 'DEV') {
 
 // login to discord with your app's token
 client.login(token)
-
-
-// instantiate DiscordTogether
-export const discordTogether = new DiscordTogether(client);

@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node ./src/index.ts --env=PROD",
     "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts --env=DEV",
-    "deploy:dev": "node deployCommands.js --env=DEV",
-    "deploy:prod": "node deployCommands.js --env=PROD",
+    "deploy:dev": "ts-node deployCommands.ts --env=DEV",
+    "deploy:prod": "ts-node deployCommands.ts --env=PROD",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

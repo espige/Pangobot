@@ -1,27 +1,29 @@
 // https://discordjs.guide/interactions/registering-slash-commands.html#guild-commands
 
-const { REST } = require('@discordjs/rest');
-const { Routes } = require('discord-api-types/v9');
-const fs = require('fs');
-const yargs = require('yargs');
+import { REST } from '@discordjs/rest';
+import { Routes } from 'discord-api-types/v9';
+import fs from 'fs';
+import * as yargs from 'yargs';
+import { Command } from "./src/common/interfaces"
 const config = require('./config.json');
 
-const commands = [];
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const commands: any[] = [];
+const commandFiles = fs.readdirSync(`${__dirname}/src/commands`).filter((file: string) => file.endsWith('.ts'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
+	const { command }: { command: Command } = require(`${__dirname}/src/commands/${file}`);
 	commands.push(command.data.toJSON());
 }
 
 let token;
 let clientId;
 let guildId;
-if (yargs.argv.env === 'DEV') {
+const argv = yargs.option({ env: { type: 'string' } }).parseSync();
+if (argv.env === 'DEV') {
 	token = config.tokenDev;
 	clientId = config.clientIdDev;
 	guildId = config.guildIdBotTestServer;
-} else if (yargs.argv.env === 'PROD') {
+} else if (argv.env === 'PROD') {
 	token = config.tokenProd;
 	clientId = config.clientIdProd;
 	guildId = config.guildIdSocialPangolin;
@@ -30,8 +32,6 @@ if (yargs.argv.env === 'DEV') {
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
-
-console.log(JSON.stringify(commands));
 
 (async () => {
 	try {
