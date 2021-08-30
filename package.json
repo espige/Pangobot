@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js --env=PROD",
-    "prod": "node index.js --env=PROD",
+    "dev": "nodemon index.js --env=DEV",
     "deploy:dev": "node deployCommands.js --env=DEV",
     "deploy:prod": "node deployCommands.js --env=PROD",
     "test": "echo \"Error: no test specified\" && exit 1"
