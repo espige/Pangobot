@@ -20,7 +20,7 @@ const intents = [
 const client = new Client({ intents });
 
 const commands = new Collection<string, Command>();
-const commandFiles = fs.readdirSync(`${__dirname}/commands`).filter((file: string) => file.endsWith('.ts'));
+const commandFiles = fs.readdirSync(`${__dirname}/commands`).filter((file: string) => file.endsWith('.ts') || file.endsWith('.js'));
 for (const file of commandFiles) {
     const { command }: { command: Command } = require(`${__dirname}/commands/${file}`);
     // set a new item in the Collection
