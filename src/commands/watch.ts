@@ -1,13 +1,14 @@
-import { SlashCommandBuilder } from "@discordjs/builders";
-import { DiscordTogether } from "discord-together";
-import { CommandInteraction } from "discord.js";
-import { Command } from "../common/interfaces";
+import { SlashCommandBuilder } from '@discordjs/builders';
+import { DiscordTogether } from 'discord-together';
+import { CommandInteraction } from 'discord.js';
+import { Command } from '../common/interfaces';
 
 const data = new SlashCommandBuilder()
     .setName('watch')
     .setDescription('Watch youtube videos together')
-    .addChannelOption(option =>
-        option.setName('voice-channel')
+    .addChannelOption((option) =>
+        option
+            .setName('voice-channel')
             .setDescription('Which voice channel to use')
             .setRequired(true)
     );
@@ -21,9 +22,14 @@ const execute = async (interaction: CommandInteraction): Promise<void> => {
         });
     } else {
         const discordTogether = new DiscordTogether(interaction.client);
-        const invite = await discordTogether.createTogetherCode(channel.id, 'youtube');
-        interaction.reply(`Beep boop. Started a youtube watch activity in ${channel.name}\n${invite.code}`);
+        const invite = await discordTogether.createTogetherCode(
+            channel.id,
+            'youtube'
+        );
+        interaction.reply(
+            `Beep boop. Started a youtube watch activity in ${channel.name}\n${invite.code}`
+        );
     }
-}
+};
 
 export const command: Command = { data, execute };
