@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction, MessageEmbed } from 'discord.js';
-import { randBetween } from "../common/helperFunctions";
-import { Command } from "../common/interfaces";
+import { randBetween } from '../common/helperFunctions';
+import { Command } from '../common/interfaces';
 
 const data = new SlashCommandBuilder()
     .setName('flip')
@@ -13,6 +13,6 @@ const execute = async (interaction: CommandInteraction): Promise<void> => {
         .setTitle('Flipped a coin')
         .setDescription(res);
     await interaction.reply({ embeds: [embed] });
-}
+};
 
 export const command: Command = { data, execute };
