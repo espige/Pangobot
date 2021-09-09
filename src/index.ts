@@ -7,6 +7,7 @@ import path from 'path';
 import * as yargs from 'yargs';
 import { bannedWords } from './common/bannedWords';
 import { Command } from './common/interfaces';
+import { DiscordTogether } from 'discord-together';
 
 const { tokenDev, tokenProd } = require('../config.json');
 
@@ -111,3 +112,6 @@ if (argv.env === 'DEV') {
 
 // login to discord with your app's token
 client.login(token);
+
+// global instances to share between multiple commands
+export const discordTogether = new DiscordTogether(client);
