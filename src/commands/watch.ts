@@ -1,6 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
+import { DiscordTogether } from 'discord-together';
 import { CommandInteraction } from 'discord.js';
-import { discordTogether } from '../index';
 import { Command } from '../common/interfaces';
 
 const data = new SlashCommandBuilder()
@@ -21,6 +21,7 @@ const execute = async (interaction: CommandInteraction): Promise<void> => {
             ephemeral: true,
         });
     } else {
+        const discordTogether = new DiscordTogether(interaction.client);
         const invite = await discordTogether.createTogetherCode(
             channel.id,
             'youtube'
